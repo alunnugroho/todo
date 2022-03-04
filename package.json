@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development nodemon bin/www",
+    "start": "node bin/www",
+    "test": "NODE_ENV=test npx jest --detectOpenHandles --testTimeout=50000"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,10 @@
   "homepage": "https://github.com/alunnugroho/todo#readme",
   "devDependencies": {
     "dotenv": "^16.0.0",
+    "jest": "^27.5.1",
     "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -14,11 +14,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   
+  const today = new Date();
+  let yesterday = new Date();
+  
+  yesterday.setDate(today.getDate() - 1);
+  
   Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     UserId: DataTypes.INTEGER,
-    due_date: DataTypes.DATE
+    due_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'wrong date format'
+        },
+       isAfter: yesterday.toISOString().slice(0, 10)
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',

@@ -10,6 +10,9 @@ function errorHandler(error, req, res, next) {
   } else if (error.name === 'SequelizeForeignKeyConstraintError') {
     code = 400;
     message = 'bad request';
+  } else if (error.name === 'BadRequest') {
+    code = 400;
+    message = 'bad request';
   } else if (error.name === 'SignInFailed') {
     code = 401;
     message = 'wrong email/password'
@@ -30,7 +33,7 @@ function errorHandler(error, req, res, next) {
     message = 'not found';
   } else {
     code = 500;
-    message = error;
+    message = 'internal server error';
   }
   res.status(code).json({ message });
 }

@@ -1,7 +1,7 @@
 const { User } = require('./../models/index');
 
 class RegisterController {
-
+  
   static async register(req, res, next) {
     const { username, email, password, role } = req.body;
     try {
@@ -15,7 +15,7 @@ class RegisterController {
       next(error);
     }
   }
-
+  
 }
 
 module.exports = RegisterController;

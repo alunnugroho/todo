@@ -5,33 +5,19 @@ const { User } = require('./../models/index');
 class SignInController {
   
   static async signIn(req, res, next) {
-    const { email, password } = req.body
-    const failSignIn = 'SignInFailed'
+    const { email, password } = req.body;
     try {
-      const user = await User.findOne({
-        where: { email: email }
-      });
-      
-      if (!user) {
-        throw { name: failSignIn }
-      }
-      
-      const comparePassword = compare(password, user.password)
-      if (!comparePassword) {
-        throw { name: failSignIn }
-      }
-      
-      const token = await sign({
-        id: user.id,
-        email: user.email
-      })
-      
-      res.status(200).json({ token })
+      if (!email || !password) throw { name: 'BadRequest' };
+      const result = await User.findOne({ where: { email } });
+      if (!result) throw { name: 'SignInFailed' };
+      if (!compare(password, result.password)) throw { name: 'SignInFailed' };
+      const access_token = sign({ id: result.id, email: result.email });
+      res.status(200).json({ access_token });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   
 }
 
-module.exports = SignInController;
+module.exports = SignInController
